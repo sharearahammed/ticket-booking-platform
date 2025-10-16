@@ -1,5 +1,6 @@
-import { useState, useCallback } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
+
+const PAGE_SIZE = 5;
 
 const generateTickets = (page, category) => {
   const categories = {
@@ -212,22 +213,36 @@ const generateTickets = (page, category) => {
   return categories[category] || [];
 };
 
-export const useInfiniteTickets = (category) => {
-  const [pages, setPages] = useState([0]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [hasMore, setHasMore] = useState(true);
+export const useInfiniteTickets = (category, priceFilter = "all") => {
+  return useInfiniteQuery({
+    queryKey: ["tickets", category, priceFilter],
+    queryFn: ({ pageParam = 0 }) => {
+      // Generate all tickets for the category across multiple pages
+      const totalPages = 10; // Example: total pages
+      let allTickets = [];
+      for (let i = 0; i < totalPages; i++) {
+        allTickets.push(...generateTickets(i, category));
+      }
 
-  const loadMore = useCallback(() => {
-    setIsLoading(true);
-    // Simulate API delay
-    setTimeout(() => {
-      setPages((prev) => [...prev, prev.length]);
-      setHasMore(true);
-      setIsLoading(false);
-    }, 500);
-  }, []);
+      // Apply price filter
+      allTickets = allTickets.filter((ticket) => {
+        if (priceFilter === "budget") return ticket.price < 50;
+        if (priceFilter === "mid") return ticket.price >= 50 && ticket.price < 150;
+        if (priceFilter === "premium") return ticket.price >= 150;
+        return true;
+      });
 
-  const allTickets = pages.flatMap((page) => generateTickets(page, category));
+      // Paginate
+      const start = pageParam * PAGE_SIZE;
+      const end = start + PAGE_SIZE;
+      const pageTickets = allTickets.slice(start, end);
 
-  return { tickets: allTickets, loadMore, isLoading, hasMore };
+      return {
+        tickets: pageTickets,
+        nextPage: end < allTickets.length ? pageParam + 1 : undefined,
+      };
+    },
+    getNextPageParam: (lastPage) => lastPage.nextPage,
+    keepPreviousData: true,
+  });
 };
