@@ -4,6 +4,8 @@ import { useInfiniteTickets } from "../hooks/useInfiniteTickets";
 import { addToCart } from "../store/cartSlice";
 import { useDispatch } from "react-redux";
 import { ChevronLeft, Star, Clock, Tag, Users } from "lucide-react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const DetailsPage = ({ onNavigate }) => {
   const dispatch = useDispatch();
@@ -11,11 +13,13 @@ const DetailsPage = ({ onNavigate }) => {
   const { id } = useParams();
   const location = useLocation();
   const category = location.state?.category;
-  const { tickets } = useInfiniteTickets(category);
+  const { data: tickets } = useInfiniteTickets(category);
   const [quantity, setQuantity] = useState(1);
   const [selectedSeats, setSelectedSeats] = useState([]);
 
-  const ticket = tickets.find((t) => t.id === id);
+  // Flatten paginated data
+  const allTickets = tickets?.pages?.flatMap((page) => page.tickets) || [];
+  const ticket = allTickets.find((t) => t.id === id);
 
   const toggleSeat = (seatId) => {
     setSelectedSeats((prev) =>
@@ -27,9 +31,18 @@ const DetailsPage = ({ onNavigate }) => {
 
   const handleBooking = () => {
     if (selectedSeats.length === 0) {
-      alert("Please select at least one seat");
+      toast.warning("Please select at least one seat", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "colored",
+      });
       return;
     }
+
     dispatch(
       addToCart({
         ...ticket,
@@ -37,11 +50,31 @@ const DetailsPage = ({ onNavigate }) => {
         selectedSeats,
       })
     );
-    navigate("/cart");
+
+    toast.success("Added to cart successfully!", {
+      position: "top-right",
+      autoClose: 1800,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      theme: "colored",
+    });
+
+    setTimeout(() => {
+      navigate("/cart");
+    }, 1000);
   };
+
+  if (!tickets) {
+    return <p className="text-center mt-10">Loading ticket details...</p>;
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-emerald-50">
+      {/* Toast Container */}
+      <ToastContainer position="top-right" />
+
       <div className="max-w-7xl mx-auto px-4 py-6 sm:py-8 md:py-10">
         {/* Back Button */}
         <button
@@ -137,17 +170,17 @@ const DetailsPage = ({ onNavigate }) => {
             <div className="h-1 bg-gradient-to-r from-blue-200 via-emerald-200 to-blue-200 rounded-full mb-8 md:mb-10"></div>
 
             {/* Seat Selection */}
-            <div className="mb-10 p-4 sm:p-6 bg-gradient-to-br from-blue-50 to-emerald-50 rounded-2xl border-2 border-blue-200">
-              <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6 flex items-center gap-2">
-                <span className="inline-flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-blue-600 text-white text-xs sm:text-sm font-bold">
+            <div className="mb-10 p-6 sm:p-8 bg-gradient-to-br from-blue-50 to-emerald-50 rounded-3xl border border-blue-100 shadow-md">
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+                <span className="inline-flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-blue-600 text-white text-sm sm:text-base font-bold shadow-lg">
                   🎫
                 </span>
                 Select Your Seats
               </h2>
 
               {/* Seat Grid */}
-              <div className="bg-white rounded-xl p-2 mb-6 border-2 border-blue-100">
-                <div className="grid grid-cols-6 md:grid-cols-8 gap-1">
+              <div className="bg-white rounded-2xl p-4 mb-6 border border-blue-100 shadow-inner">
+                <div className="grid grid-cols-6 md:grid-cols-8 gap-3">
                   {Array.from({ length: 24 }).map((_, idx) => {
                     const seatId = `A${idx + 1}`;
                     const isSelected = selectedSeats.includes(seatId);
@@ -155,10 +188,10 @@ const DetailsPage = ({ onNavigate }) => {
                       <button
                         key={seatId}
                         onClick={() => toggleSeat(seatId)}
-                        className={`p-1 sm:p-2 rounded-lg text-[10px] sm:text-xs font-bold transition-all transform hover:scale-110 border-2 ${
+                        className={`flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 text-sm font-bold rounded-xl transition-all duration-300 transform border-2 ${
                           isSelected
                             ? "bg-gradient-to-br from-emerald-500 to-emerald-600 text-white border-emerald-700 shadow-lg scale-105"
-                            : "bg-gradient-to-br from-gray-100 to-gray-200 text-gray-700 border-gray-300 hover:from-blue-100 hover:to-blue-200 hover:border-blue-400"
+                            : "bg-gray-100 text-gray-700 border-gray-300 hover:bg-blue-100 hover:text-blue-700 hover:border-blue-400 hover:shadow-md"
                         }`}
                       >
                         {idx + 1}
@@ -169,7 +202,7 @@ const DetailsPage = ({ onNavigate }) => {
               </div>
 
               {/* Seat Summary */}
-              <div className="bg-blue-100 border-l-4 border-blue-600 p-3 sm:p-4 rounded-lg">
+              <div className="bg-blue-50 border-l-4 border-blue-600 p-4 rounded-xl shadow-sm">
                 <p className="text-gray-800 text-sm sm:text-base font-semibold">
                   Selected seats:{" "}
                   <span className="text-blue-600 font-bold text-base sm:text-lg">
@@ -229,8 +262,16 @@ const DetailsPage = ({ onNavigate }) => {
         {/* Trust Badges */}
         <div className="mt-10 sm:mt-12 grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
           {[
-            { icon: "🛡️", title: "Secure Payment", desc: "256-bit SSL Encrypted" },
-            { icon: "✅", title: "Instant Confirmation", desc: "Get your tickets instantly" },
+            {
+              icon: "🛡️",
+              title: "Secure Payment",
+              desc: "256-bit SSL Encrypted",
+            },
+            {
+              icon: "✅",
+              title: "Instant Confirmation",
+              desc: "Get your tickets instantly",
+            },
             { icon: "📞", title: "24/7 Support", desc: "Always here to help" },
           ].map((b, i) => (
             <div
@@ -238,7 +279,9 @@ const DetailsPage = ({ onNavigate }) => {
               className="bg-white p-4 sm:p-6 rounded-xl border-2 border-blue-200 text-center hover:shadow-lg transition-all"
             >
               <p className="text-2xl sm:text-3xl mb-2">{b.icon}</p>
-              <p className="font-bold text-gray-900 text-base sm:text-lg">{b.title}</p>
+              <p className="font-bold text-gray-900 text-base sm:text-lg">
+                {b.title}
+              </p>
               <p className="text-xs sm:text-sm text-gray-600 mt-1">{b.desc}</p>
             </div>
           ))}

@@ -10,6 +10,7 @@ import {
   Headphones,
   Sparkles,
 } from "lucide-react";
+import { motion } from "framer-motion";
 
 export default function HomePage() {
   const [hoveredCard, setHoveredCard] = useState(null);
@@ -70,7 +71,7 @@ export default function HomePage() {
   ];
 
   return (
-    <div className="bg-gradient-to-b from-slate-50 via-blue-50 to-slate-50 min-h-screen">
+    <div className="bg-gradient-to-b from-slate-50 via-blue-50 to-slate-50 max-w-7xl mx-auto px-4">
       {/* Hero Section */}
       <div className="relative overflow-hidden">
         {/* Background Animation */}
@@ -79,7 +80,7 @@ export default function HomePage() {
           <div className="absolute -bottom-8 left-20 w-72 h-72 bg-amber-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse delay-2000"></div>
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-4 py-10 md:py-16">
+        <div className="relative max-w-7xl mx-auto py-10 md:py-16">
           {/* Hero Content */}
           <div className="mb-16 text-center md:text-left">
             <div className="inline-block mb-4 px-4 py-2 bg-blue-100 rounded-full">
@@ -97,7 +98,8 @@ export default function HomePage() {
             </h1>
 
             <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-8 max-w-2xl mx-auto md:mx-0">
-              Movies, Events, & Transportation - All in One Place. Experience seamless booking with unbeatable deals.
+              Movies, Events, & Transportation - All in One Place. Experience
+              seamless booking with unbeatable deals.
             </p>
 
             <button className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold text-sm sm:text-base transition-all transform hover:scale-105 shadow-lg hover:shadow-xl">
@@ -143,7 +145,7 @@ export default function HomePage() {
       </div>
 
       {/* Features Section */}
-      <div className="max-w-7xl mx-auto px-4 py-12 md:py-20">
+      <div className="py-12 md:py-20">
         <div className="text-center mb-12">
           <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-gray-900 mb-4">
             Why Choose TicketHub?
@@ -205,19 +207,55 @@ export default function HomePage() {
       </div>
 
       {/* CTA Section */}
-      <div className="max-w-7xl mx-auto px-4 py-16 text-center">
-        <div className="bg-gradient-to-r from-blue-600 to-emerald-600 rounded-3xl p-8 sm:p-12 text-white">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
+      <div className="py-20 text-center bg-[#F9FAFB]">
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="relative overflow-hidden rounded-3xl p-10 sm:p-14 bg-gradient-to-r from-[#2563EB] via-[#10B981] to-[#2563EB] text-white shadow-2xl"
+        >
+          {/* Decorative Glow */}
+          <div className="absolute inset-0 bg-white/10 backdrop-blur-xl rounded-3xl border border-white/20" />
+
+          {/* Content */}
+          <motion.h2
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1, duration: 0.6 }}
+            className="relative text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 drop-shadow-lg"
+          >
             Ready to Book?
-          </h2>
-          <p className="text-sm sm:text-base md:text-lg opacity-90 mb-8">
-            Don't miss out on amazing deals and unforgettable experiences
-          </p>
-          <button className="bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-gray-900 px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-bold text-sm sm:text-base transition-all transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center gap-2 mx-auto">
+          </motion.h2>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+            className="relative text-sm sm:text-base md:text-lg text-white/90 mb-10 max-w-2xl mx-auto leading-relaxed"
+          >
+            Don’t miss out on{" "}
+            <span className="font-semibold text-amber-300">amazing deals</span>{" "}
+            and
+            <span className="font-semibold text-emerald-300">
+              {" "}
+              unforgettable experiences
+            </span>{" "}
+            — your next adventure awaits!
+          </motion.p>
+
+          <motion.button
+            whileHover={{ scale: 1.08, y: -3 }}
+            whileTap={{ scale: 0.97 }}
+            className="relative bg-gradient-to-r from-[#FACC15] to-[#FBBF24] hover:from-[#FBBF24] hover:to-[#F59E0B] text-[#111827] px-8 sm:px-10 py-4 sm:py-5 rounded-2xl font-bold text-base sm:text-lg shadow-lg hover:shadow-amber-500/40 flex items-center justify-center gap-2 mx-auto transition-all"
+          >
             Start Booking Now
-            <ArrowRight size={18} />
-          </button>
-        </div>
+            <ArrowRight size={22} />
+          </motion.button>
+
+          {/* Subtle Animated Rings */}
+          <div className="absolute -top-24 -left-24 w-72 h-72 bg-amber-400/10 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute -bottom-24 -right-24 w-72 h-72 bg-emerald-400/10 rounded-full blur-3xl animate-pulse" />
+        </motion.div>
       </div>
     </div>
   );

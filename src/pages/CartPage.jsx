@@ -8,7 +8,6 @@ const CartPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { items: cart } = useSelector((state) => state.cart);
-  console.log("cart", cart);
 
   const totalPrice = useSelector((state) => state.cart.totalPrice);
   const tax = totalPrice * 0.1;

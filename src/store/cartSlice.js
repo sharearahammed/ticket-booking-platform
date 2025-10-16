@@ -11,7 +11,6 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action) => {
-      console.log("state", state);
       const item = action.payload;
 
       // Check if ticket with same id AND same selectedSeats exists
