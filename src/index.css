@@ -1,0 +1,19 @@
+@font-face {
+  font-family: Lato;
+  src: url("./assets/fonts/Lato-Regular.ttf");
+}
+
+@import "tailwindcss"; 
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
+
+@theme {
+  --font-lato: Lato, "sens-serif";
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+}
+
