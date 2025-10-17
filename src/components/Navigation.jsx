@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ShoppingCart, Menu, X, Search, User } from "lucide-react";
+import { ShoppingCart, Menu, X, Search, User, Heart } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const Navigation = ({ cartCount = 0 }) => {
@@ -13,6 +13,7 @@ const Navigation = ({ cartCount = 0 }) => {
     { page: "/movies", label: "Movies", icon: "🎬" },
     { page: "/events", label: "Events", icon: "🎪" },
     { page: "/transportation", label: "Travel", icon: "🚌" },
+    { page: "/wishlist", label: "Wishlist", icon: "❤️" }, // ✅ Added Wishlist
   ];
 
   const handleNavigate = (page) => {
@@ -70,6 +71,7 @@ const Navigation = ({ cartCount = 0 }) => {
           </div>
 
           {/* Right Actions */}
+          {/* Right Actions */}
           <div className="flex items-center gap-2 sm:gap-3">
             {/* Search Button */}
             <button className="hidden sm:flex p-2.5 text-gray-600 hover:text-blue-600 transition-all hover:bg-gradient-to-br hover:from-blue-100 hover:to-blue-50 rounded-xl border-2 border-transparent hover:border-blue-300 group">
@@ -87,6 +89,14 @@ const Navigation = ({ cartCount = 0 }) => {
                   {cartCount > 9 ? "9+" : cartCount}
                 </span>
               )}
+            </button>
+
+            {/* Login Button */}
+            <button
+              onClick={() => handleNavigate("/login")}
+              className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-xl font-semibold text-white bg-gradient-to-r from-blue-600 to-emerald-600 hover:from-blue-700 hover:to-emerald-700 shadow-md transition-all"
+            >
+              Login
             </button>
 
             {/* Mobile Menu Button */}

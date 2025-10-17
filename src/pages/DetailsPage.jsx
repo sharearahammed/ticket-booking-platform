@@ -3,11 +3,14 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useInfiniteTickets } from "../hooks/useInfiniteTickets";
 import { addToCart } from "../store/cartSlice";
 import { useDispatch } from "react-redux";
-import { ChevronLeft, Star, Clock, Tag, Users } from "lucide-react";
+import { ChevronLeft, Star, Clock, Tag, Users, X } from "lucide-react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import useWindowSize from "../hooks/useWindowSize";
+import LoginPage from "./LoginPage"; // import your login page
 
 const DetailsPage = ({ onNavigate }) => {
+  const { isMobile } = useWindowSize();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
@@ -16,6 +19,7 @@ const DetailsPage = ({ onNavigate }) => {
   const { data: tickets } = useInfiniteTickets(category);
   const [quantity, setQuantity] = useState(1);
   const [selectedSeats, setSelectedSeats] = useState([]);
+  const [showLoginModal, setShowLoginModal] = useState(false);
 
   // Flatten paginated data
   const allTickets = tickets?.pages?.flatMap((page) => page.tickets) || [];
@@ -30,6 +34,13 @@ const DetailsPage = ({ onNavigate }) => {
   };
 
   const handleBooking = () => {
+    // Check if user is logged in
+    const userEmail = localStorage.getItem("userEmail");
+    if (!userEmail) {
+      setShowLoginModal(true); // show login modal
+      return;
+    }
+
     if (selectedSeats.length === 0) {
       toast.warning("Please select at least one seat", {
         position: "top-right",
@@ -258,6 +269,24 @@ const DetailsPage = ({ onNavigate }) => {
             </div>
           </div>
         </div>
+
+        {/* Login Modal */}
+        {showLoginModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/20 backdrop-blur-md">
+            <div className="relative w-full max-w-md mx-auto mt-10">
+              {/* Close Button */}
+              <div
+                className="z-100 cursor-pointer absolute top-6 right-3 bg-red-500 font-bold text-2xl rounded-full transition-all shadow-md w-[40px] h-[40px] flex items-center justify-center text-red-50"
+                onClick={() => setShowLoginModal(false)}
+              >
+                <X />
+              </div>
+
+              {/* Modal Content */}
+              <LoginPage />
+            </div>
+          </div>
+        )}
 
         {/* Trust Badges */}
         <div className="mt-10 sm:mt-12 grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">

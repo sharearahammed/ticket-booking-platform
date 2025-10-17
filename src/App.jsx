@@ -33,6 +33,11 @@ import TermsOfServicePage from "./pages/TermsOfServicePage";
 import RefundPolicyPage from "./pages/RefundPolicyPage";
 import CookiePolicyPage from "./pages/CookiePolicyPage";
 import ScrollToTop from "./hooks/ScrollToTop";
+import WishlistPage from "./pages/WishlistPage";
+import useWindowSize from "./hooks/useWindowSize";
+import MobileBottomNav from "./pages/MobileBottomNav";
+import ProfileSection from "./pages/ProfileSection";
+import LoginPage from "./pages/LoginPage";
 // import "./index.css"
 // ============= MOCK DATA GENERATOR =============
 
@@ -42,9 +47,10 @@ import ScrollToTop from "./hooks/ScrollToTop";
 
 // ============= MAIN APP COMPONENT =============
 const App = () => {
+  const { isMobile } = useWindowSize();
   return (
     <div className=" bg-gray-50">
-      <Navigation />
+      {isMobile ? <MobileBottomNav /> : <Navigation />}
       <ScrollToTop />
       <main className="container max-w-7xl mx-auto px-4">
         <Routes>
@@ -64,6 +70,7 @@ const App = () => {
           />
           <Route path="/details/:id" element={<DetailsPage />} />
           <Route path="/cart" element={<CartPage />} />
+          <Route path="/wishlist" element={<WishlistPage />} />
           <Route path="/about-us" element={<AboutPage />} />
           <Route path="/contact-us" element={<ContactPage />} />
           <Route path="/support" element={<SupportPage />} />
@@ -72,12 +79,14 @@ const App = () => {
           <Route path="/terms-of-Service" element={<TermsOfServicePage />} />
           <Route path="/refund-policy-service" element={<RefundPolicyPage />} />
           <Route path="/cookie-policy" element={<CookiePolicyPage />} />
+          <Route path="/profile" element={<ProfileSection />} />
+          <Route path="/login" element={<LoginPage />} />
           {/* <Route path="/404" element={<NotFoundPage />} /> */}
           {/* <Route path="*" element={<Navigate to="/404" replace />} /> */}
         </Routes>
       </main>
 
-      <Footer />
+      {!isMobile && <Footer />}
     </div>
   );
 };
