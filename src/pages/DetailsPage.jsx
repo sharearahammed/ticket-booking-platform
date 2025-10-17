@@ -34,10 +34,9 @@ const DetailsPage = () => {
   };
 
   const handleBooking = () => {
-    // Check if user is logged in
     const userEmail = localStorage.getItem("userEmail");
     if (!userEmail) {
-      setShowLoginModal(true); // show login modal
+      setShowLoginModal(true);
       return;
     }
 
@@ -83,7 +82,6 @@ const DetailsPage = () => {
 
   return (
     <div className="bg-gradient-to-br from-slate-50 via-blue-50 to-emerald-50 lg:pb-0 pb-20">
-      {/* Toast Container */}
       <ToastContainer position="top-right" />
 
       <div className="max-w-7xl mx-auto px-4 py-6 sm:py-8 md:py-10">
@@ -101,12 +99,21 @@ const DetailsPage = () => {
 
         {/* Main Content Card */}
         <div className="bg-white rounded-2xl shadow-xl overflow-hidden border-2 border-blue-100">
-          {/* Hero Image Section */}
+          {/* ✅ Updated Hero Image Section */}
           <div className="relative bg-gradient-to-br from-blue-500 to-emerald-600 h-44 sm:h-56 md:h-96 flex items-center justify-center overflow-hidden group">
-            <div className="absolute inset-0 opacity-20 bg-grid-pattern"></div>
-            <div className="text-7xl sm:text-8xl md:text-9xl group-hover:scale-110 transition-transform duration-300">
-              {ticket?.image}
-            </div>
+            {ticket?.image ? (
+  <img
+    src={ticket.image}
+    alt={ticket.title}
+    className="absolute inset-0 w-full h-full object-contain bg-black transition-transform duration-700"
+  />
+) : (
+  <div className="flex items-center justify-center absolute inset-0 text-7xl sm:text-8xl md:text-9xl text-white opacity-50">
+    🎟️
+  </div>
+)}
+
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
           </div>
 
           <div className="p-5 sm:p-8 md:p-10">
@@ -274,15 +281,12 @@ const DetailsPage = () => {
         {showLoginModal && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/20 backdrop-blur-md">
             <div className="relative w-full max-w-md mx-auto mt-10">
-              {/* Close Button */}
               <div
                 className="z-100 cursor-pointer absolute top-6 right-3 bg-red-500 font-bold text-2xl rounded-full transition-all shadow-md w-[40px] h-[40px] flex items-center justify-center text-red-50"
                 onClick={() => setShowLoginModal(false)}
               >
                 <X />
               </div>
-
-              {/* Modal Content */}
               <LoginPage />
             </div>
           </div>

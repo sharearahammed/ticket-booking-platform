@@ -171,9 +171,9 @@ export default function HomePage() {
   ];
 
   return (
-    <div className="bg-gradient-to-b from-slate-50 via-blue-50 to-slate-50">
+    <div className=" max-w-7xl mx-auto px-4 bg-gradient-to-b from-slate-50 via-blue-50 to-slate-50">
       {/* Hero Section */}
-      <div className="relative overflow-hidden max-w-7xl mx-auto px-4">
+      <div className="relative overflow-hidden">
         {/* Background Animation */}
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute top-0 right-0 w-96 h-96 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
@@ -245,7 +245,7 @@ export default function HomePage() {
       </div>
 
       {/* Features Section */}
-      <div className="py-12 md:py-20 max-w-7xl mx-auto px-4">
+      <div className="py-12 md:py-20">
         <div className="text-center mb-12">
           <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-gray-900 mb-4">
             Why Choose TicketHub?
@@ -281,7 +281,7 @@ export default function HomePage() {
       </div>
 
       {/* Popular Destinations Section */}
-      <div className="py-12 md:py-20 max-w-7xl mx-auto px-4">
+      <div className="py-12 md:py-20">
         <div className="text-center mb-12">
           <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-gray-900 mb-4">
             Popular Destinations
@@ -404,7 +404,7 @@ export default function HomePage() {
       </div>
 
       {/* Testimonials Section */}
-      <div className="py-12 md:py-20 max-w-7xl mx-auto px-4">
+      <div className="py-12 md:py-20">
         <div className="text-center mb-12">
           <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-gray-900 mb-4">
             What Our Users Say
@@ -445,7 +445,7 @@ export default function HomePage() {
       </div>
 
       {/* Pricing Section */}
-      <div className="py-12 md:py-20 max-w-7xl mx-auto px-4">
+      <div className="py-12 md:py-20">
         <div className="text-center mb-12">
           <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-gray-900 mb-4">
             Simple & Transparent Pricing
@@ -508,7 +508,7 @@ export default function HomePage() {
       </div>
 
       {/* CTA Section */}
-      <div className="lg:py-20 pb-26 text-center bg-[#F9FAFB] max-w-7xl mx-auto px-4">
+      <div className="lg:py-20 pb-26 text-center bg-[#F9FAFB]">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}

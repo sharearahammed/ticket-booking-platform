@@ -13,7 +13,7 @@ const Navigation = ({ cartCount = 0 }) => {
     { page: "/movies", label: "Movies", icon: "🎬" },
     { page: "/events", label: "Events", icon: "🎪" },
     { page: "/transportation", label: "Travel", icon: "🚌" },
-    { page: "/wishlist", label: "Wishlist", icon: "❤️" }, // ✅ Added Wishlist
+    { page: "/wishlist", label: "Wishlist", icon: "❤️" },
   ];
 
   const handleNavigate = (page) => {
@@ -22,16 +22,17 @@ const Navigation = ({ cartCount = 0 }) => {
   };
 
   return (
-    <nav className="sticky top-0 z-50 bg-gradient-to-r from-white via-blue-50 to-white border-b-2 border-blue-200 shadow-lg">
+    <nav className="py-3 sticky top-0 z-50 bg-gradient-to-r from-white via-blue-50 to-white border-b border-blue-200 shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
+
           {/* Logo Section */}
           <div
             onClick={() => handleNavigate("/")}
-            className="flex items-center gap-3 cursor-pointer group hover:opacity-90 transition-all duration-300"
+            className="flex items-center gap-2 cursor-pointer group hover:opacity-90 transition-all duration-300"
           >
             <div className="relative">
-              <div className="absolute -inset-1.5 bg-gradient-to-r from-blue-600 to-emerald-600 rounded-lg blur opacity-40 group-hover:opacity-60 transition duration-300"></div>
+              <div className="absolute -inset-1.5 bg-gradient-to-r from-blue-600 to-emerald-600 rounded-lg blur opacity-30 group-hover:opacity-60 transition duration-300"></div>
               <div className="relative bg-white rounded-lg px-2.5 py-1.5 border-2 border-blue-200 group-hover:border-blue-300 transition-colors">
                 <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-emerald-600 bg-clip-text text-transparent">
                   TH
@@ -54,31 +55,39 @@ const Navigation = ({ cartCount = 0 }) => {
                 <button
                   key={item.page}
                   onClick={() => handleNavigate(item.page)}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-xl font-semibold transition-all duration-300 relative group ${
+                  className={`flex items-center gap-2 px-4 py-1.5 rounded-xl font-semibold transition-all duration-300 relative group ${
                     isActive
-                      ? "text-blue-600 bg-gradient-to-br from-blue-100 to-blue-50 border-2 border-blue-400 shadow-md"
-                      : "text-gray-700 hover:text-blue-600 hover:bg-gradient-to-br hover:from-blue-50 hover:to-white border-2 border-transparent hover:border-blue-200"
+                      ? "cursor-pointer text-blue-600 bg-gradient-to-br from-blue-100 to-blue-50 border-2 border-blue-400"
+                      : "cursor-pointer text-gray-700 hover:text-blue-600 hover:bg-gradient-to-br hover:from-blue-50 hover:to-white border-2 border-transparent hover:border-blue-200"
                   }`}
                 >
                   <span className="text-lg">{item.icon}</span>
                   <span>{item.label}</span>
-                  {isActive && (
+                  {/* {isActive && (
                     <div className="absolute bottom-0 left-4 right-4 h-1.5 bg-gradient-to-r from-blue-600 to-emerald-600 rounded-t-full"></div>
-                  )}
+                  )} */}
                 </button>
               );
             })}
           </div>
 
           {/* Right Actions */}
-          {/* Right Actions */}
           <div className="flex items-center gap-2 sm:gap-3">
-            {/* Search Button */}
+
+            {/* Search */}
             <button className="hidden sm:flex p-2.5 text-gray-600 hover:text-blue-600 transition-all hover:bg-gradient-to-br hover:from-blue-100 hover:to-blue-50 rounded-xl border-2 border-transparent hover:border-blue-300 group">
               <Search className="w-5 h-5" strokeWidth={2.5} />
             </button>
 
-            {/* Cart Button */}
+            {/* Wishlist */}
+            <button
+              onClick={() => handleNavigate("/wishlist")}
+              className="hidden sm:flex p-2.5 text-gray-600 hover:text-red-500 transition-all hover:bg-gradient-to-br hover:from-red-50 hover:to-red-100 rounded-xl border-2 border-transparent hover:border-red-200 group"
+            >
+              <Heart className="w-5 h-5" strokeWidth={2.5} />
+            </button>
+
+            {/* Cart */}
             <button
               onClick={() => handleNavigate("/cart")}
               className="relative p-2.5 text-gray-600 hover:text-blue-600 transition-all hover:bg-gradient-to-br hover:from-blue-100 hover:to-blue-50 rounded-xl border-2 border-transparent hover:border-blue-300 group"
@@ -91,11 +100,12 @@ const Navigation = ({ cartCount = 0 }) => {
               )}
             </button>
 
-            {/* Login Button */}
+            {/* Login */}
             <button
               onClick={() => handleNavigate("/login")}
               className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-xl font-semibold text-white bg-gradient-to-r from-blue-600 to-emerald-600 hover:from-blue-700 hover:to-emerald-700 shadow-md transition-all"
             >
+              <User className="w-5 h-5" />
               Login
             </button>
 
@@ -104,18 +114,14 @@ const Navigation = ({ cartCount = 0 }) => {
               className="md:hidden p-2.5 text-gray-600 hover:text-blue-600 transition-all hover:bg-gradient-to-br hover:from-blue-100 hover:to-blue-50 rounded-xl border-2 border-transparent hover:border-blue-300"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
-              {mobileMenuOpen ? (
-                <X className="w-6 h-6" strokeWidth={2.5} />
-              ) : (
-                <Menu className="w-6 h-6" strokeWidth={2.5} />
-              )}
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden pb-4 border-t-2 border-blue-200 bg-gradient-to-b from-blue-50/80 to-emerald-50/50 backdrop-blur-sm">
+          <div className="md:hidden pb-4 border-t border-blue-200 bg-gradient-to-b from-blue-50/80 to-emerald-50/50 backdrop-blur-sm">
             <div className="space-y-2 py-3">
               {navItems.map((item) => {
                 const isActive = currentPage === item.page;
@@ -137,19 +143,6 @@ const Navigation = ({ cartCount = 0 }) => {
                   </button>
                 );
               })}
-            </div>
-
-            <div className="h-px bg-gradient-to-r from-blue-200/0 via-blue-300 to-blue-200/0 my-3 mx-4"></div>
-
-            <div className="space-y-2 px-2">
-              <button className="w-full flex items-center gap-3 px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-gradient-to-r hover:from-blue-50 hover:to-emerald-50 transition-all rounded-xl font-semibold border-2 border-transparent hover:border-blue-200">
-                <Search className="w-5 h-5" strokeWidth={2.5} />
-                <span>Search</span>
-              </button>
-              <button className="w-full flex items-center gap-3 px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-gradient-to-r hover:from-blue-50 hover:to-emerald-50 transition-all rounded-xl font-semibold border-2 border-transparent hover:border-blue-200">
-                <User className="w-5 h-5" strokeWidth={2.5} />
-                <span>Profile</span>
-              </button>
             </div>
           </div>
         )}
