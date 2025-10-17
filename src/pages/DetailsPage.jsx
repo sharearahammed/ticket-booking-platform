@@ -9,7 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import useWindowSize from "../hooks/useWindowSize";
 import LoginPage from "./LoginPage"; // import your login page
 
-const DetailsPage = ({ onNavigate }) => {
+const DetailsPage = () => {
   const { isMobile } = useWindowSize();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -82,14 +82,14 @@ const DetailsPage = ({ onNavigate }) => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-emerald-50">
+    <div className="bg-gradient-to-br from-slate-50 via-blue-50 to-emerald-50 lg:pb-0 pb-20">
       {/* Toast Container */}
       <ToastContainer position="top-right" />
 
       <div className="max-w-7xl mx-auto px-4 py-6 sm:py-8 md:py-10">
         {/* Back Button */}
         <button
-          onClick={() => onNavigate("home")}
+          onClick={() => navigate(-1)}
           className="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-semibold sm:font-bold mb-6 sm:mb-8 text-sm sm:text-base md:text-lg group transition-all hover:gap-3"
         >
           <ChevronLeft

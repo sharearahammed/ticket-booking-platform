@@ -37,7 +37,7 @@ export default function ProfileSection() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 via-emerald-50 to-white px-4 py-12">
+    <div className="pb-20 lg:pb-0 bg-gradient-to-b from-blue-50 via-emerald-50 to-white px-4 py-12">
       {/* Background gradient elements */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-300/20 rounded-full blur-3xl animate-pulse"></div>
@@ -50,7 +50,7 @@ export default function ProfileSection() {
       <div className="relative max-w-5xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-blue-600 to-emerald-600 bg-clip-text text-transparent mb-2">
+          <h1 className="leading-24 text-4xl sm:text-5xl font-bold bg-gradient-to-r from-blue-600 to-emerald-600 bg-clip-text text-transparent mb-2">
             My Profile
           </h1>
           <p className="text-gray-600">Manage your account and preferences</p>
