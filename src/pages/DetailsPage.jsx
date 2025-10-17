@@ -181,7 +181,7 @@ const DetailsPage = ({ onNavigate }) => {
             <div className="h-1 bg-gradient-to-r from-blue-200 via-emerald-200 to-blue-200 rounded-full mb-8 md:mb-10"></div>
 
             {/* Seat Selection */}
-            <div className="mb-10 p-6 sm:p-8 bg-gradient-to-br from-blue-50 to-emerald-50 rounded-3xl border border-blue-100 shadow-md">
+            <div className="mb-10 p-4 sm:p-8 bg-gradient-to-br from-blue-50 to-emerald-50 rounded-3xl border border-blue-100 shadow-md">
               <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
                 <span className="inline-flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-blue-600 text-white text-sm sm:text-base font-bold shadow-lg">
                   🎫
@@ -190,7 +190,7 @@ const DetailsPage = ({ onNavigate }) => {
               </h2>
 
               {/* Seat Grid */}
-              <div className="bg-white rounded-2xl p-4 mb-6 border border-blue-100 shadow-inner">
+              <div className="bg-white rounded-2xl p-3 mb-5 border border-blue-100 shadow-inner">
                 <div className="grid grid-cols-6 md:grid-cols-8 gap-3">
                   {Array.from({ length: 24 }).map((_, idx) => {
                     const seatId = `A${idx + 1}`;
@@ -199,7 +199,7 @@ const DetailsPage = ({ onNavigate }) => {
                       <button
                         key={seatId}
                         onClick={() => toggleSeat(seatId)}
-                        className={`flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 text-sm font-bold rounded-xl transition-all duration-300 transform border-2 ${
+                        className={`flex items-center justify-center w-8 h-8 sm:w-12 sm:h-12 text-xs sm:text-sm sm:font-bold rounded-xl transition-all duration-300 transform border-2 ${
                           isSelected
                             ? "bg-gradient-to-br from-emerald-500 to-emerald-600 text-white border-emerald-700 shadow-lg scale-105"
                             : "bg-gray-100 text-gray-700 border-gray-300 hover:bg-blue-100 hover:text-blue-700 hover:border-blue-400 hover:shadow-md"

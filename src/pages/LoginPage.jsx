@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   ArrowRight,
   Mail,
@@ -14,6 +14,8 @@ import "react-toastify/dist/ReactToastify.css";
 
 export default function LoginPage() {
   const navigate = useNavigate();
+  const location = useLocation();
+  console.log("location", location);
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -35,9 +37,9 @@ export default function LoginPage() {
       });
 
       // Redirect to last visited page after short delay (to allow toast to show)
-    //   setTimeout(() => {
-    //     navigate(-1);
-    //   }, 500);
+      //   setTimeout(() => {
+      //     navigate(-1);
+      //   }, 500);
     }, 1500);
   };
 
@@ -190,15 +192,20 @@ export default function LoginPage() {
         </div>
 
         {/* Security Badge */}
-        <div className="mt-8 p-4 bg-white rounded-lg border-2 border-emerald-200 text-center">
-          <p className="text-xs text-gray-600">
-            🔒{" "}
-            <span className="font-semibold text-emerald-600">Secure Login</span>
-          </p>
-          <p className="text-xs text-gray-500 mt-1">
-            Your data is encrypted and protected with industry-leading security
-          </p>
-        </div>
+        {location.pathname === "/login" && (
+          <div className="mt-8 p-4 bg-white rounded-lg border-2 border-emerald-200 text-center">
+            <p className="text-xs text-gray-600">
+              🔒{" "}
+              <span className="font-semibold text-emerald-600">
+                Secure Login
+              </span>
+            </p>
+            <p className="text-xs text-gray-500 mt-1">
+              Your data is encrypted and protected with industry-leading
+              security
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );
