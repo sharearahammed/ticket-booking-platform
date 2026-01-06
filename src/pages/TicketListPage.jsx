@@ -86,7 +86,7 @@ const TicketListPage = ({ category }) => {
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="w-full px-5 py-3 border-2 border-blue-200 rounded-xl bg-white text-gray-700 font-semibold focus:outline-none focus:border-blue-600 transition-all cursor-pointer hover:border-blue-300 text-sm sm:text-base md:text-lg"
+                className="w-full px-1 py-3 border-2 border-blue-200 rounded-xl bg-white text-gray-700 font-semibold focus:outline-none focus:border-blue-600 transition-all cursor-pointer hover:border-blue-300 text-sm sm:text-base md:text-lg"
               >
                 {options.map((opt) => (
                   <option key={opt.value} value={opt.value}>

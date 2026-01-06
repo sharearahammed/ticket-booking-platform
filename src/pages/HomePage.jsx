@@ -10,15 +10,17 @@ import {
   Headphones,
   Sparkles,
   Star,
-  Clock,
-  DollarSign,
   CheckCircle,
   ChevronRight,
 } from "lucide-react";
 import { motion } from "framer-motion";
+import "./HomePage.css";
+import BgVideo from "/beach.mp4";
+import useWindowSize from "../hooks/useWindowSize";
 
 export default function HomePage() {
   const [hoveredCard, setHoveredCard] = useState(null);
+  const { isMobile } = useWindowSize();
 
   const categories = [
     {
@@ -171,38 +173,42 @@ export default function HomePage() {
   ];
 
   return (
-    <div className=" max-w-7xl mx-auto px-4 bg-gradient-to-b from-slate-50 via-blue-50 to-slate-50">
+    <div
+      className={`z-40 landingpage max-w-7xl p-3.5 sm:p-0 sm:px-4 ${
+        !isMobile ? "mt-20" : "mt-0"
+      }`}
+    >
       {/* Hero Section */}
       <div className="relative overflow-hidden">
         {/* Background Animation */}
-        <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute overflow-hidden">
           <div className="absolute top-0 right-0 w-96 h-96 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
           <div className="absolute -bottom-8 left-20 w-72 h-72 bg-amber-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse delay-2000"></div>
         </div>
 
-        <div className="relative max-w-7xl mx-auto py-10 md:py-16">
+        <div className="sm:py-5 md:py-8">
           {/* Hero Content */}
           <div className="mb-16 text-center md:text-left">
-            <div className="inline-block mb-4 px-4 py-2 bg-blue-100 rounded-full">
-              <span className="text-xs sm:text-sm md:text-base font-semibold text-blue-700 flex items-center gap-2">
-                <Sparkles size={16} />
+            <div className="inline-block mb-4 px-4 py-1 bg-blue-100 rounded-full">
+              <span className="text-[11px] sm:text-sm md:text-base font-semibold text-blue-700 flex items-center gap-2">
+                <Sparkles size={15} />
                 Your Ultimate Ticket Destination
               </span>
             </div>
 
-            <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+            <h1 className="text-xl sm:text-4xl md:text-6xl font-bold text-blue-400 mb-6 leading-tight">
               Book Your Next
               <span className="block bg-gradient-to-r from-blue-600 via-emerald-500 to-amber-500 bg-clip-text text-transparent">
                 Adventure
               </span>
             </h1>
 
-            <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-8 max-w-2xl mx-auto md:mx-0">
+            <p className="text-[10px] sm:text-lg md:text-xl text-gray-50 mb-6 sm:mb-8 max-w-2xl mx-auto md:mx-0">
               Movies, Events, & Transportation - All in One Place. Experience
               seamless booking with unbeatable deals.
             </p>
 
-            <button className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold text-sm sm:text-base transition-all transform hover:scale-105 shadow-lg hover:shadow-xl">
+            <button className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-4 sm:px-8 py-2 sm:py-4 rounded-[6px] sm:rounded-xl font-semibold text-[11px] sm:text-base transition-all transform hover:scale-105 shadow-lg hover:shadow-xl">
               Explore Now
               <ArrowRight size={18} />
             </button>
@@ -224,7 +230,7 @@ export default function HomePage() {
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-20 bg-gradient-to-tr from-transparent via-white to-transparent transition-opacity"></div>
 
                 <div className="relative z-10 text-white text-left">
-                  <div className="text-4xl sm:text-5xl md:text-6xl mb-4 transform group-hover:scale-110 transition-transform">
+                  <div className="text-4xl sm:text-5xl md:text-6xl mb-4 transform transition-transform">
                     {cat.icon}
                   </div>
                   <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-2">

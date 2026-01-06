@@ -7,6 +7,7 @@ const Navigation = ({ cartCount = 0 }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const currentPage = location.pathname;
+  const hasUserEmail = localStorage.getItem("userEmail");
 
   const navItems = [
     { page: "/", label: "Home", icon: "🏠" },
@@ -22,17 +23,16 @@ const Navigation = ({ cartCount = 0 }) => {
   };
 
   return (
-    <nav className="py-3 sticky top-0 z-50 bg-gradient-to-r from-white via-blue-50 to-white border-b border-blue-200 shadow-md">
+    <nav className="py-3 fixed top-0 left-0 w-full z-50 bg-gradient-to-r from-white/60 via-blue-50/50 to-white/60 shadow-md backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-
           {/* Logo Section */}
           <div
             onClick={() => handleNavigate("/")}
             className="flex items-center gap-2 cursor-pointer group hover:opacity-90 transition-all duration-300"
           >
             <div className="relative">
-              <div className="absolute -inset-1.5 bg-gradient-to-r from-blue-600 to-emerald-600 rounded-lg blur opacity-30 group-hover:opacity-60 transition duration-300"></div>
+              <div className="absolute rounded-lg blur opacity-30 group-hover:opacity-60 transition duration-300"></div>
               <div className="relative bg-white rounded-lg px-2.5 py-1.5 border-2 border-blue-200 group-hover:border-blue-300 transition-colors">
                 <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-emerald-600 bg-clip-text text-transparent">
                   TH
@@ -73,7 +73,6 @@ const Navigation = ({ cartCount = 0 }) => {
 
           {/* Right Actions */}
           <div className="flex items-center gap-2 sm:gap-3">
-
             {/* Search */}
             <button className="hidden sm:flex p-2.5 text-gray-600 hover:text-blue-600 transition-all hover:bg-gradient-to-br hover:from-blue-100 hover:to-blue-50 rounded-xl border-2 border-transparent hover:border-blue-300 group">
               <Search className="w-5 h-5" strokeWidth={2.5} />
@@ -102,11 +101,15 @@ const Navigation = ({ cartCount = 0 }) => {
 
             {/* Login */}
             <button
-              onClick={() => handleNavigate("/login")}
+              onClick={() =>
+                hasUserEmail
+                  ? handleNavigate("/profile")
+                  : handleNavigate("/login")
+              }
               className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-xl font-semibold text-white bg-gradient-to-r from-blue-600 to-emerald-600 hover:from-blue-700 hover:to-emerald-700 shadow-md transition-all"
             >
               <User className="w-5 h-5" />
-              Login
+              {hasUserEmail ? "Profile" : "Login"}
             </button>
 
             {/* Mobile Menu Button */}
@@ -114,7 +117,11 @@ const Navigation = ({ cartCount = 0 }) => {
               className="md:hidden p-2.5 text-gray-600 hover:text-blue-600 transition-all hover:bg-gradient-to-br hover:from-blue-100 hover:to-blue-50 rounded-xl border-2 border-transparent hover:border-blue-300"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <Menu className="w-6 h-6" />
+              )}
             </button>
           </div>
         </div>

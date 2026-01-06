@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 const MobileBottomNav = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const hasUserEmail = localStorage.getItem("userEmail");
 
   const navItems = [
     { path: "/", label: "Home", icon: <Home size={22} /> },
@@ -42,25 +43,47 @@ const MobileBottomNav = () => {
       })}
 
       {/* Profile Shortcut */}
-      <button
-        onClick={() => navigate("/profile")}
-        className={`flex flex-col items-center justify-center text-xs font-semibold transition-all ${
-          location.pathname === "/profile"
-            ? "text-blue-600 scale-110"
-            : "text-gray-500 hover:text-blue-600"
-        }`}
-      >
-        <div
-          className={`p-2 rounded-full transition-all ${
+      {hasUserEmail ? (
+        <button
+          onClick={() => navigate("/profile")}
+          className={`flex flex-col items-center justify-center text-xs font-semibold transition-all ${
             location.pathname === "/profile"
-              ? "bg-gradient-to-br from-blue-100 to-emerald-100 shadow-md"
-              : ""
+              ? "text-blue-600 scale-110"
+              : "text-gray-500 hover:text-blue-600"
           }`}
         >
-          <User size={22} />
-        </div>
-        <span className="text-[11px] mt-0.5">Profile</span>
-      </button>
+          <div
+            className={`p-2 rounded-full transition-all ${
+              location.pathname === "/profile"
+                ? "bg-gradient-to-br from-blue-100 to-emerald-100 shadow-md"
+                : ""
+            }`}
+          >
+            <User size={22} />
+          </div>
+          <span className="text-[11px] mt-0.5">Profile</span>
+        </button>
+      ) : (
+        <button
+          onClick={() => navigate("/login")}
+          className={`flex flex-col items-center justify-center text-xs font-semibold transition-all ${
+            location.pathname === "/login"
+              ? "text-blue-600 scale-110"
+              : "text-gray-500 hover:text-blue-600"
+          }`}
+        >
+          <div
+            className={`p-2 rounded-full transition-all ${
+              location.pathname === "/login"
+                ? "bg-gradient-to-br from-blue-100 to-emerald-100 shadow-md"
+                : ""
+            }`}
+          >
+            <User size={22} />
+          </div>
+          <span className="text-[11px] mt-0.5">Login</span>
+        </button>
+      )}
     </div>
   );
 };

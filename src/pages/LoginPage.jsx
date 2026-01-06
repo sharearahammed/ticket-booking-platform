@@ -15,7 +15,6 @@ import "react-toastify/dist/ReactToastify.css";
 export default function LoginPage() {
   const navigate = useNavigate();
   const location = useLocation();
-  console.log("location", location);
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -27,19 +26,47 @@ export default function LoginPage() {
 
     setTimeout(() => {
       setIsLoading(false);
-      // Save email to localStorage
+
+      if (!email && !password) {
+        toast.error("Email and Password are required!", {
+          position: "top-right",
+          autoClose: 2000,
+        });
+        return;
+      }
+      
+      if (!email) {
+        toast.error("Email is required!", {
+          position: "top-right",
+          autoClose: 2000,
+        });
+        return;
+      }
+
+      if (!password) {
+        toast.error("Password is required!", {
+          position: "top-right",
+          autoClose: 2000,
+        });
+        return;
+      }
+
+      // Save email
       localStorage.setItem("userEmail", email);
 
-      // Show toast
-      toast.success("Login successful!", {
-        position: "top-right",
-        autoClose: 2000,
-      });
-
-      // Redirect to last visited page after short delay (to allow toast to show)
-      //   setTimeout(() => {
-      //     navigate(-1);
-      //   }, 500);
+      // Check localStorage
+      if (localStorage.getItem("userEmail")) {
+        toast.success("Login successful!", {
+          position: "top-right",
+          autoClose: 2000,
+        });
+        navigate("/");
+      } else {
+        toast.error("Login failed. Please try again.", {
+          position: "top-right",
+          autoClose: 2000,
+        });
+      }
     }, 1500);
   };
 

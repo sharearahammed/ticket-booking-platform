@@ -13,6 +13,8 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function ProfileSection() {
   const [isEditing, setIsEditing] = useState(false);
@@ -36,8 +38,27 @@ export default function ProfileSection() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleLogout = () => {
+    localStorage.clear();
+    toast.success("Logged out successfully!", {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+    setTimeout(() => {
+      window.location.href = "/login"; // redirect after toast
+    }, 2000);
+  };
+
   return (
-    <div className="pb-20 lg:pb-0 bg-gradient-to-b from-blue-50 via-emerald-50 to-white px-4 py-12">
+    <div className="pb-20 lg:pb-0 bg-gradient-to-b from-blue-50 via-emerald-50 to-white px-4 py-12 relative">
+      <ToastContainer />
+
       {/* Background gradient elements */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-300/20 rounded-full blur-3xl animate-pulse"></div>
@@ -230,30 +251,72 @@ export default function ProfileSection() {
               label: "Logout",
               desc: "Sign out from your account",
             },
-          ].map((item, idx) => (
-            <button key={idx} className="group relative">
-              <div className="absolute -inset-px bg-gradient-to-r from-blue-600 to-emerald-600 rounded-xl blur opacity-0 group-hover:opacity-100 transition-opacity"></div>
-              <div className="relative bg-gradient-to-br from-white to-emerald-50 backdrop-blur-sm rounded-xl p-5 border border-blue-200 hover:border-blue-300 transition-all text-left group-hover:bg-blue-50">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-blue-100 to-emerald-100 border border-blue-200 flex items-center justify-center">
-                      <item.icon className="text-blue-600" size={20} />
+          ]
+            // Filter out Logout if localStorage is empty
+            .filter((item) => {
+              if (item.label === "Logout") {
+                return localStorage.length > 0;
+              }
+              return true;
+            })
+            .map((item, idx) => (
+              <button
+                key={idx}
+                className="group relative w-full"
+                onClick={() => {
+                  if (item.label === "Logout") handleLogout();
+                }}
+              >
+                <div
+                  className={`absolute -inset-px rounded-xl blur opacity-0 group-hover:opacity-100 transition-opacity ${
+                    item.label === "Logout"
+                      ? "bg-gradient-to-r from-red-600 to-red-600"
+                      : "bg-gradient-to-r from-blue-600 to-emerald-600"
+                  }`}
+                ></div>
+
+                <div
+                  className={`relative rounded-xl p-5 border transition-all text-left ${
+                    item.label === "Logout" ? "" : "group-hover:border-blue-300"
+                  }  ${
+                    item.label === "Logout"
+                      ? "bg-red-50 border-red-300 group-hover:bg-red-100"
+                      : "bg-gradient-to-br from-white to-emerald-50 border-blue-200 group-hover:bg-blue-50"
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-4">
+                      <div
+                        className={`w-12 h-12 rounded-lg flex items-center justify-center border ${
+                          item.label === "Logout"
+                            ? "bg-red-100 border-red-300"
+                            : "bg-gradient-to-br from-blue-100 to-emerald-100 border-blue-200"
+                        }`}
+                      >
+                        <item.icon
+                          className={
+                            item.label === "Logout"
+                              ? "text-red-600"
+                              : "text-blue-600"
+                          }
+                          size={20}
+                        />
+                      </div>
+                      <div>
+                        <p className="font-semibold text-gray-900">
+                          {item.label}
+                        </p>
+                        <p className="text-sm text-gray-600">{item.desc}</p>
+                      </div>
                     </div>
-                    <div>
-                      <p className="font-semibold text-gray-900">
-                        {item.label}
-                      </p>
-                      <p className="text-sm text-gray-600">{item.desc}</p>
-                    </div>
+                    <ChevronRight
+                      className="text-gray-400 group-hover:text-gray-600 transition-colors"
+                      size={20}
+                    />
                   </div>
-                  <ChevronRight
-                    className="text-gray-400 group-hover:text-gray-600 transition-colors"
-                    size={20}
-                  />
                 </div>
-              </div>
-            </button>
-          ))}
+              </button>
+            ))}
         </div>
       </div>
     </div>
