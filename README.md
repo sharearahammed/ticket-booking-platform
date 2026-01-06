@@ -1,6 +1,6 @@
 # 🎟️ Ticket Booking Platform
 
-[🌐 Live Demo](ticket-booking-platform.netlify.app)
+[🌐 Live Demo](https://ticket-booking-platform.netlify.app)
 
 A **modern, responsive, single-page Ticket Booking platform** built with **React.js, Tailwind CSS, Redux Toolkit, and TanStack Query**. This platform allows users to browse and book tickets for **Movies, Events, and Transportation** with an **app-like mobile experience**.
 
