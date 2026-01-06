@@ -189,7 +189,7 @@ export default function HomePage() {
         <div className="sm:py-5 md:py-8">
           {/* Hero Content */}
           <div className="mb-16 text-center md:text-left">
-            <div className="inline-block mb-4 px-4 py-1 bg-blue-100 rounded-full">
+            <div className="inline-block mb-4 px-4 py-2 bg-blue-100 rounded-full">
               <span className="text-[11px] sm:text-sm md:text-base font-semibold text-blue-700 flex items-center gap-2">
                 <Sparkles size={15} />
                 Your Ultimate Ticket Destination

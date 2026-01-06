@@ -62,7 +62,7 @@ const App = () => {
             autoPlay
             muted
             loop
-             className="video-bg absolute top-0 left-0 w-full h-5/12 object-cover -z-10 brightness-60"
+             className="video-bg absolute top-0 left-0 w-full xl:h-[800px] lg:h-[760px] md:h-[700px] object-cover -z-10 brightness-60"
           />
       )}
 
